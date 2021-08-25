@@ -32,18 +32,16 @@ public class CreditCheck {
 
         Scanner scan = new Scanner(System.in);
         boolean flag = true;
-        StringBuilder creditCard = new StringBuilder();
-        Integer checkDigit = 0;
-
+        Long creditNumber = 0l;
+        CreditCheck creditCheck = new CreditCheck();
         do {
             System.out.println("Please enter your 14-19 digit credit card number...");
 
             try {
-                Long creditNumber = Long.parseLong(scan.nextLine());
+                creditNumber = Long.parseLong(scan.nextLine());
 
                 if (creditNumber.toString().length() >= 14 && creditNumber.toString().length() <= 19) {
                     System.out.println("Credit card number entered, verifying...");
-                    creditCard.append(creditNumber);
                     flag = false;
                 } else {
                     System.out.println("Invalid input! Please enter a 14-19 digit credit card number");
@@ -53,7 +51,15 @@ public class CreditCheck {
             }
 
         } while (flag != false);
+        System.out.println(creditCheck.validateCard(creditNumber));
 
+    }
+
+    public boolean validateCard(Long creditNumber) {
+        StringBuilder creditCard = new StringBuilder();
+        Integer checkDigit = 0;
+
+        creditCard.append(creditNumber);
         checkDigit = Character.getNumericValue(creditCard.charAt(creditCard.length() - 1));
         creditCard.deleteCharAt(creditCard.length() - 1);
 
@@ -79,10 +85,10 @@ public class CreditCheck {
             sum += numberArray[i];
         }
 
-        if((10 - (Character.getNumericValue(sum.toString().charAt(sum.toString().length() - 1)))) == checkDigit) {
-            System.out.println(true);
+        if ((10 - (Character.getNumericValue(sum.toString().charAt(sum.toString().length() - 1)))) == checkDigit) {
+            return true;
         } else {
-            System.out.println(false);
+            return false;
         }
 
     }
